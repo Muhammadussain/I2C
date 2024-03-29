@@ -1,0 +1,225 @@
+$date
+	Sat Mar 30 02:36:20 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ns
+$end
+$scope module I2C_master1_tb $end
+$var parameter 32 ! CLK_PERIOD $end
+$var reg 1 " SDA_in $end
+$var reg 1 # clk $end
+$var reg 8 $ data_in [7:0] $end
+$var reg 1 % enable $end
+$var reg 8 & ext_reg_addr [7:0] $end
+$var reg 7 ' ext_slave_addr [6:0] $end
+$var reg 1 ( read_write $end
+$var reg 1 ) reset $end
+$scope module u_I2C_master1 $end
+$var wire 1 " SDA_in $end
+$var wire 1 # clk $end
+$var wire 8 * data_in [7:0] $end
+$var wire 1 % enable $end
+$var wire 8 + ext_reg_addr [7:0] $end
+$var wire 7 , ext_slave_addr [6:0] $end
+$var wire 1 ( read_write $end
+$var wire 1 ) reset $end
+$var parameter 3 - ADDRESS $end
+$var parameter 3 . ADD_ACK_NACK $end
+$var parameter 3 / DATA $end
+$var parameter 3 0 DATA_ACK_NACK $end
+$var parameter 3 1 IDLE $end
+$var parameter 3 2 START $end
+$var parameter 3 3 STOP $end
+$var parameter 3 4 r_w $end
+$var reg 1 5 SDA_out $end
+$var reg 3 6 nextstate [2:0] $end
+$var reg 1 7 scl $end
+$var reg 1 8 scl_counter $end
+$var reg 7 9 shiftreg [6:0] $end
+$var reg 3 : state [2:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b11 4
+b111 3
+b1 2
+b0 1
+b110 0
+b101 /
+b100 .
+b10 -
+b1010 !
+$end
+#0
+$dumpvars
+b0 :
+b0 9
+08
+17
+b1 6
+15
+b0 ,
+b0 +
+b0 *
+1)
+0(
+b0 '
+b0 &
+1%
+b0 $
+1#
+0"
+$end
+#5
+18
+0#
+#10
+05
+b10 6
+b1 :
+1#
+0)
+#15
+07
+08
+0#
+#20
+x5
+b0 6
+b10 :
+1#
+#25
+18
+0#
+#30
+b1 6
+15
+17
+b0 :
+1#
+#35
+08
+0#
+#40
+07
+05
+b10 6
+b1 :
+1#
+#45
+18
+0#
+#50
+x5
+b0 6
+b10 :
+1#
+#55
+08
+0#
+#60
+b1 6
+15
+17
+b0 :
+1#
+#65
+18
+0#
+#70
+05
+b10 6
+b1 :
+1#
+#75
+07
+08
+0#
+#80
+x5
+b0 6
+b10 :
+1#
+#85
+18
+0#
+#90
+b1 6
+15
+17
+b0 :
+1#
+#95
+08
+0#
+#100
+07
+05
+b10 6
+b1 :
+1#
+#105
+18
+0#
+#110
+x5
+b0 6
+b10 :
+1#
+0%
+#115
+08
+0#
+#120
+b0 :
+1#
+#125
+18
+0#
+#130
+1#
+#135
+08
+0#
+#140
+1#
+#145
+18
+0#
+#150
+1#
+#155
+08
+0#
+#160
+1#
+#165
+18
+0#
+#170
+1#
+#175
+08
+0#
+#180
+1#
+#185
+18
+0#
+#190
+1#
+#195
+08
+0#
+#200
+1#
+#205
+18
+0#
+#210
+1#
