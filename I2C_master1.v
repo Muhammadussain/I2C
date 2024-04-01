@@ -32,7 +32,7 @@ module I2C_master1 (
 
     reg [3:0] state, nextstate;
     reg [6:0] shiftreg,shiftreg1 ;
-    reg [2:0] reg_add_counter;
+    reg [2:0] reg_add_counter=3'b000;
     reg [2:0] addcounter,data_add_counter = 3'b000;
 
     always @(negedge clk ) begin
@@ -93,7 +93,10 @@ module I2C_master1 (
                 
             end
             r_w: begin
-            nextstate=ADD_ACK_NACK;
+                if (read_write) begin
+                   nextstate=ADD_ACK_NACK; 
+                end
+            
     
             end 
 
@@ -102,10 +105,12 @@ module I2C_master1 (
                     nextstate = slave_reg;
                    
                 end
+                reg_add_counter = 3'b000;
             end
 
 
             slave_reg:begin
+                
               if(scl_counter==1) begin
                     reg_add_counter = reg_add_counter + 1;
 

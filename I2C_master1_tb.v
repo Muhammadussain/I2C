@@ -61,7 +61,7 @@ module I2C_master1_tb;
         data_in = 8'b0;
         ext_slave_addr = 7'b0;
         ext_reg_addr = 8'b0;
-        read_write = 1'b0;
+        read_write = 1'b1;
         SDA_in = 1'b0;
 
         // Reset
@@ -82,7 +82,7 @@ module I2C_master1_tb;
         // Add more test scenarios here...
 
         // End simulation
-        #100;
+        #400;
         $finish;
     end
 
