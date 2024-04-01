@@ -12,6 +12,9 @@ module I2C_master1_tb;
     reg [7:0] data_in;
     reg [6:0] ext_slave_addr;
     reg [7:0] ext_reg_addr;
+    reg add_Ack;
+    reg reg_Ack;
+    reg data_Ack;
     reg read_write;
     reg SDA_in;
     
@@ -27,7 +30,11 @@ module I2C_master1_tb;
         .data_in(data_in),
         .ext_slave_addr(ext_slave_addr),
         .ext_reg_addr(ext_reg_addr),
+    //    .ext_data(ext_data),   
         .read_write(read_write),
+        .add_Ack(add_Ack),
+        .reg_Ack(reg_Ack),
+        .data_Ack(data_Ack),
         //.SDA_out(SDA_out), // commented out to prevent redeclaration error
         //.scl(scl),         // commented out to prevent redeclaration error
         .SDA_in(SDA_in)
@@ -48,6 +55,9 @@ module I2C_master1_tb;
         ext_slave_addr=7'b1101001;
         reset = 1'b1;
         enable = 1'b1;
+        add_Ack = 1'b1;
+        reg_Ack = 1'b1;
+        data_Ack = 1'b1;
         data_in = 8'b0;
         ext_slave_addr = 7'b0;
         ext_reg_addr = 8'b0;

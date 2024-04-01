@@ -5,6 +5,7 @@ module I2C_master1 (
     input wire [7:0] data_in,
     input wire [6:0] ext_slave_addr,
     input wire [7:0] ext_reg_addr,
+   // input wire [7:0] ext_data,
     input wire read_write,
     input wire add_Ack,
     input wire reg_Ack,
@@ -121,6 +122,7 @@ module I2C_master1 (
                     nextstate = DATA;
                    
                 end
+             end
             DATA: begin
                 if(scl_counter==1) begin
                     data_add_counter = data_add_counter + 1;
@@ -147,7 +149,12 @@ module I2C_master1 (
                     SDA_out <= 1'b1;
                     
                 end
+             end
         endcase
     end                                                                                                                                                                                                                                                                                                                                       
     
 endmodule
+
+// iverilog -o I2C_master1.out I2C_master1.v I2C_master1_tb.v
+// vvp I2C_master1.out
+// gtkwave I2C_master1.vcd
