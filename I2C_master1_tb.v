@@ -68,7 +68,7 @@ module I2C_master1_tb;
         // Scenario 1: Enable asserted
         #100;
         $display("Scenario 1: Enable asserted");
-        enable = 1'b0;
+        //enable = 1'b0;
         // Add more test scenarios here...
 
         // End simulation
