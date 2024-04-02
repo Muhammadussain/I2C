@@ -5,7 +5,6 @@ module I2C_master1 (
     input wire [7:0] data_in,
     input wire [6:0] ext_slave_addr,
     input wire [7:0] ext_reg_addr,
-   // input wire [7:0] ext_data,
     input wire read_write,
     input wire add_Ack,
     input wire reg_Ack,
@@ -31,18 +30,20 @@ module I2C_master1 (
     localparam STOP = 4'b1001;      
 
     reg [3:0] state, nextstate;
-    reg [6:0] shiftreg,shiftreg1 ;
-    reg [2:0] reg_add_counter=3'b000;
-    reg [2:0] addcounter,data_add_counter = 3'b000;
+    reg [6:0] shiftreg/*shiftreg1,*/ ;
+    reg [7:0] shiftreg1,shiftreg2 ;
+    reg [3:0] reg_add_counter,data_add_counter=4'b000;
+    reg [2:0] addcounter/*,data_add_counter*/ = 3'b000;
 
     always @(negedge clk ) begin
         scl_counter <= scl_counter + 1;
     end
     always @(posedge clk) begin
-        // addcounter <= addcounter + 1;
+    
         if (reset) begin
             state <= IDLE;
-            
+            //  shiftreg =ext_slave_addr;
+            //  shiftreg1=ext_reg_addr;
         end
         else begin
             state <= nextstate;
@@ -65,8 +66,9 @@ module I2C_master1 (
             end
             START: begin
                 SDA_out <= 1'b0;
-                 shiftreg =ext_slave_addr;
-                 shiftreg1=ext_reg_addr;
+                  shiftreg =ext_slave_addr;
+                  shiftreg1=ext_reg_addr;
+                  shiftreg2=data_in;
                 if(scl_counter==0)begin
                     scl <= 1'b0;
                     
@@ -77,22 +79,26 @@ module I2C_master1 (
             end
             
             ADDRESS: begin
+                scl =scl_counter;
                 if(scl_counter==1) begin
                     addcounter = addcounter + 1;
-
+                    SDA_out <= shiftreg[7];
+                    shiftreg = {shiftreg[6:0], 1'b0};
                 end
 
-                 SDA_out <= shiftreg[7];
-                    shiftreg = {shiftreg[6:0], 1'b0};
+                //  SDA_out <= shiftreg[7];
+                //     shiftreg = {shiftreg[6:0], 1'b0};
                 // nextstate = IDLE;
 
                  if (addcounter == 3'b111) begin
+                    // nextstate = r_w;
                     nextstate = r_w;
                     addcounter = 3'b000;
                 end
                 
             end
             r_w: begin
+                 scl =scl_counter;
                 if (read_write) begin
                    nextstate=ADD_ACK_NACK; 
                 end
@@ -101,6 +107,7 @@ module I2C_master1 (
             end 
 
             ADD_ACK_NACK: begin
+                 scl =scl_counter;
                 if (add_Ack) begin
                     nextstate = slave_reg;
                    
@@ -110,30 +117,39 @@ module I2C_master1 (
 
 
             slave_reg:begin
-                
-              if(scl_counter==1) begin
+                 scl =scl_counter;
+              if(scl_counter==0) begin
                     reg_add_counter = reg_add_counter + 1;
 
+                    SDA_out <= shiftreg1[7];
+                    shiftreg1 = {shiftreg1[6:0], 1'b0};
                 end
 
+                //  SDA_out <= shiftreg1[7];
+                //     shiftreg1 = {shiftreg1[6:0], 1'b0};
 
-                 if (reg_add_counter == 3'b111) begin
+                 if (reg_add_counter == 4'b1001) begin
                     nextstate = reg_ACK_NACK;
                     reg_add_counter = 3'b000;
                 end
             end
              reg_ACK_NACK: begin
+                 scl =scl_counter;
                 if (reg_Ack) begin
                     nextstate = DATA;
                    
                 end
              end
             DATA: begin
-                if(scl_counter==1) begin
+                 scl =scl_counter;
+                if(scl_counter==0) begin
                     data_add_counter = data_add_counter + 1;
 
+                    SDA_out <= shiftreg2[7];
+                    shiftreg2 = {shiftreg2[6:0], 1'b0};
                 end
-
+                // SDA_out <= shiftreg2[7];
+                //     shiftreg2 = {shiftreg2[6:0], 1'b0};
              
                  if (data_add_counter == 3'b111) begin
                     nextstate = DATA_ACK_NACK;
@@ -142,9 +158,11 @@ module I2C_master1 (
                 
             end
             DATA_ACK_NACK: begin
+                 scl =scl_counter;
                 if (data_Ack) begin
                     nextstate = STOP;
-                   
+                   scl=1'b0;
+                   SDA_out=1'b0;
                 end
             end
              STOP: begin    

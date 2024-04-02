@@ -59,8 +59,9 @@ module I2C_master1_tb;
         reg_Ack = 1'b1;
         data_Ack = 1'b1;
         data_in = 8'b0;
-        ext_slave_addr = 7'b0;
-        ext_reg_addr = 8'b0;
+        ext_slave_addr = 7'b1101001;
+        ext_reg_addr = 8'b11111011;
+        data_in = 8'b10101010;
         read_write = 1'b1;
         SDA_in = 1'b0;
 
@@ -82,7 +83,7 @@ module I2C_master1_tb;
         // Add more test scenarios here...
 
         // End simulation
-        #400;
+        #700;
         $finish;
     end
 
