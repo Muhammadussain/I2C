@@ -99,7 +99,7 @@ module I2C_master1 (
             end
             r_w: begin
                  scl =scl_counter;
-                if (read_write) begin
+                //if (read_write) begin
                    nextstate=ADD_ACK_NACK; 
                 end
             
