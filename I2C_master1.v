@@ -104,7 +104,7 @@ module I2C_master1 (
                 end
             
     
-            end 
+             
 
             ADD_ACK_NACK: begin
                  scl =scl_counter;
@@ -144,7 +144,7 @@ module I2C_master1 (
                  scl =scl_counter;
                 if(scl_counter==0) begin
                     data_add_counter = data_add_counter + 1;
-
+                    if (read_write) begin
                     SDA_out <= shiftreg2[7];
                     shiftreg2 = {shiftreg2[6:0], 1'b0};
                 end
@@ -156,6 +156,7 @@ module I2C_master1 (
                     data_add_counter = 3'b000;
                 end
                 
+            end
             end
             DATA_ACK_NACK: begin
                  scl =scl_counter;
