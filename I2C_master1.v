@@ -112,6 +112,9 @@ module I2C_master1 (
                     nextstate = slave_reg;
                    
                 end
+                else begin
+                    nextstate = ADDRESS;
+                end
                 reg_add_counter = 3'b000;
             end
 
